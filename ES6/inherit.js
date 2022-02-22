@@ -39,11 +39,15 @@ function Child3() {
   Parent3.call(this);
   this.type = "child3";
 }
+
 Child3.prototype = new Parent3();
 var s3 = new Child3();
 var s4 = new Child3();
 s3.play.push(4);
 console.log(s3.play, s4.play);
+
+
+
 
 function Parent4() {
   this.name = "parent4";

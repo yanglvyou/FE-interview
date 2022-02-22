@@ -4,10 +4,10 @@ var arr1 = [1, 2, 3, [1, 2, 3, 4, [2, 3, 4]]];
 function flatDeep(arr, d = 1) {
   return d > 0
     ? arr.reduce(
-        (acc, val) =>
-          acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val),
-        []
-      )
+      (acc, val) =>
+        acc.concat(Array.isArray(val) ? flatDeep(val, d - 1) : val),
+      []
+    )
     : arr.slice();
 }
 
@@ -86,3 +86,18 @@ function* flatten(array) {
 var arr = [1, 2, [3, 4, [5, 6]]];
 const flattened = [...flatten(arr)];
 // [1, 2, 3, 4, 5, 6]
+
+
+// https://juejin.cn/post/6844903986479251464#heading-12
+
+
+// replace + split
+
+ary = str.replace(/(\[|\])/g, '').split(',')
+
+// 扩展运算符
+
+//只要有一个元素有数组，那么循环继续
+while (ary.some(Array.isArray)) {
+  ary = [].concat(...ary);
+}

@@ -5,9 +5,13 @@
 function Parent(name) {
   this.name = name;
 }
+
+
 Parent.sayHello = function () {
   console.log("hello");
 };
+
+
 Parent.prototype.sayName = function () {
   console.log("my name is " + this.name);
   return this.name;
@@ -19,6 +23,8 @@ function Child(name, age) {
   this.age = age;
 }
 
+
+
 function _inherits(Child, Parent) {
   // Object.create
   Child.prototype = Object.create(Parent.prototype);
@@ -28,6 +34,7 @@ function _inherits(Child, Parent) {
   // ES6
   // Object.setPrototypeOf(Child, Parent);
   // __proto__
+
   // 子类构造函数的__proto__指向父类构造器，继承父类的静态方法
   Child.__proto__ = Parent;
 }

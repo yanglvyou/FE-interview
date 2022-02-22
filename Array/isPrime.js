@@ -11,3 +11,32 @@ function isPrime(element, index, array) {
 
 console.log([4, 6, 8, 12].find(isPrime)); // undefined, not found
 console.log([4, 5, 8, 12].find(isPrime)); // 5
+
+
+// function isPrime(element){
+//   if(element <2) return false;
+//   let start=2;
+
+//   while(start<=Math.sqrt(element)){
+//     if(element % start++ <1){
+//       return false;
+//     }
+//   }
+
+//   return true;
+// }
+
+
+// function getPrime(num){
+//   const res=[];
+//   for( let i=2;i<=num;i++){
+//      if(isPrime(i)){
+//         res.push(i);
+//      }
+//   }
+//   return res;
+// }
+
+// const data=getPrime(100);
+
+// console.log(data,333)
