@@ -37,6 +37,7 @@ function _inherits(Child, Parent) {
 
   // 子类构造函数的__proto__指向父类构造器，继承父类的静态方法
   Child.__proto__ = Parent;
+  // Object.setPrototypeOf(Child,Parent)
 }
 
 _inherits(Child, Parent);
