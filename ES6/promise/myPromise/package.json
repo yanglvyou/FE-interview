@@ -4,7 +4,7 @@
 	"description": "",
 	"main": "promise.js",
 	"scripts": {
-		"test": "promises-aplus-tests myPromise5.js"
+		"test": "promises-aplus-tests myPromise6.js"
 	},
 	"devDependencies": {
 		"promises-aplus-tests": "*"
