@@ -1,3 +1,4 @@
+// https://juejin.cn/post/6844903796129136654
 Promise.resolve = function (param) {
   if (param instanceof Promise) {
     return param;
@@ -34,3 +35,27 @@ Promise.resolve = function (param) {
     }
   });
 };
+
+let p = Promise.resolve(20);
+p.then((data) => {
+  console.log(data);
+});
+
+let p2 = Promise.resolve({
+  then: function (resolve, reject) {
+    resolve(30);
+  },
+});
+
+p2.then((data) => {
+  console.log(data);
+});
+
+let p3 = Promise.resolve(
+  new Promise((resolve, reject) => {
+    resolve(400);
+  })
+);
+p3.then((data) => {
+  console.log(data);
+});
