@@ -34,3 +34,20 @@ Array.prototype.reduce = function (callbackfn, initialValue) {
   }
   return accumulator;
 }
+
+
+// 使用 reduce实现map
+
+if (!Array.prototype.mapUsingReduce) {
+  Array.prototype.mapUsingReduce = function (callback, thisArg) {
+    return this.reduce(function (mappedArray, currentValue, index, array) {
+      mappedArray[index] = callback.call(thisArg, currentValue, index, array)
+      return mappedArray
+    }, [])
+  }
+}
+
+[1, 2, , 3].mapUsingReduce(
+  (currentValue, index, array) => currentValue + index + array.length
+) // [5, 7, , 10]
+

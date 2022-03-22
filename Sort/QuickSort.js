@@ -4,6 +4,8 @@
  * Author: nameczz
  */
 
+// https://time.geekbang.org/column/article/41913
+
 const swap = (arr, i, j) => {
   if (i === j) return;
   const temp = arr[i];
@@ -161,10 +163,45 @@ var partition = (arr, left, right) => {
 
   arr[left] = base;  //最终left=right，基准元素的最终存放位置
 
-  return left;  //返回基准元素的最终存放位置
+  return left;  //
 
 }
 
 let arr = [49, 38, 65, 97, 23, 22, 76, 1, 5, 8, 2, 0, -1, 22];
 
 console.log(quickSort(arr, 0, arr.length - 1))
+
+
+
+
+// https://www.ruanyifeng.com/blog/2011/04/quicksort_in_javascript.html
+
+var quickSort = function (arr) {
+
+  if (arr.length <= 1) { return arr; }
+
+  var pivotIndex = Math.floor(arr.length / 2);
+
+  var pivot = arr.splice(pivotIndex, 1)[0];
+
+  var left = [];
+
+  var right = [];
+
+  for (var i = 0; i < arr.length; i++) {
+
+    if (arr[i] < pivot) {
+
+      left.push(arr[i]);
+
+    } else {
+
+      right.push(arr[i]);
+
+    }
+
+  }
+
+  return quickSort(left).concat([pivot], quickSort(right));
+
+};
