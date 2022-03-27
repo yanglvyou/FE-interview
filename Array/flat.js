@@ -76,7 +76,7 @@ flatten(arr1); // [1, 2, 3, 1, 2, 3, 4, 2, 3, 4]
 function* flatten(array) {
   for (const item of array) {
     if (Array.isArray(item)) {
-      yield* flatten(item);
+      yield* flatten(item);// yield*表达式,Generator 函数内部，调用另一个 Generator 函数
     } else {
       yield item;
     }
