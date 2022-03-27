@@ -1,6 +1,33 @@
 // new 、Object.create、 Object.setPrototypeOf、 __proto__ 优缺点；
 // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
 
+class A {
+}
+
+class B {
+}
+
+// B 的实例继承 A 的实例
+Object.setPrototypeOf(B.prototype, A.prototype);
+
+// B 继承 A 的静态属性
+Object.setPrototypeOf(B, A);
+
+const b = new B();
+
+
+Object.setPrototypeOf(B.prototype, A.prototype);
+// 等同于
+B.prototype.__proto__ = A.prototype;
+
+Object.setPrototypeOf(B, A);
+// 等同于
+B.__proto__ = A;
+
+
+
+
+
 // ES5 实现ES6 extends的例子
 function Parent(name) {
   this.name = name;
@@ -28,6 +55,7 @@ function Child(name, age) {
 function _inherits(Child, Parent) {
   // Object.create
   Child.prototype = Object.create(Parent.prototype);
+  // Object.setPrototypeOf(Child.prototype, Parent.prototype);
   // __proto__
   // Child.prototype.__proto__ = Parent.prototype;
   Child.prototype.constructor = Child;

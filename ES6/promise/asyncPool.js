@@ -25,13 +25,14 @@ asyncPool(2, [1000, 5000, 3000, 2000], timeout);
 
 function asyncPool(poolLimit, array, iteratorFn) {
   let i = 0;
-  const ret = [];
-  const executing = [];
+  const ret = [];// 存储所有的异步任务
+  const executing = [];// 存储正在执行的异步任务
   const enqueue = function () {
     if (i === array.length) {
       return Promise.resolve();
     }
-    const item = array[i++];
+    const item = array[i++];// 获取新的任务项
+     // 调用iteratorFn函数创建异步任务
     const p = Promise.resolve().then(() => iteratorFn(item, array));
     ret.push(p);
 
@@ -51,7 +52,6 @@ function asyncPool(poolLimit, array, iteratorFn) {
 }
 
 // ES7
-
 async function asyncPool(poolLimit, array, iteratorFn) {
   const ret = [];
   const executing = [];
