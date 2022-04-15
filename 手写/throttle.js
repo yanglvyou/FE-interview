@@ -88,3 +88,33 @@ function throttle(func, wait) {
   };
   return throttled;
 }
+
+// function throttle3(fn, wait) {
+//   let context,
+//     timeout,
+//     previous = 0;
+
+//   const later = function () {
+//     previous = +new Date();
+//     timeout = null;
+//     fn.apply(context);
+//   };
+
+//   return function (...args) {
+//     context = this;
+//     const now = +new Date();
+//     // 下次触发的时间
+//     const remaining = wait - (now - previous);
+
+//     if (remaining <= 0) {
+//       if (timeout) {
+//         clearTimeout(timeout);
+//         timeout = null;
+//       }
+//       previous = now;
+//       fn.apply(context, args);
+//     } else if (!timeout) {
+//       timeout = setTimeout(later, remaining);
+//     }
+//   };
+// }
