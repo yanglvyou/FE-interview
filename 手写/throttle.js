@@ -88,3 +88,34 @@ function throttle(func, wait) {
   };
   return throttled;
 }
+
+function throttle3(fn, wait) {
+  let context,
+    timeout = null,
+    previous = 0;
+
+  return function (...args) {
+    context = this;
+    const now = +new Date();
+    const remaining = wait - (now - previous);
+    const later = function () {
+      timeout = null;
+      previous = +new Date();
+      fn.apply(context, args);
+    };
+    if (remaining <= 0) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = now;
+      fn.apply(context, args);
+    } else if (!timeout) {
+      timeout = setTimeout(() => {
+        timeout = null;
+        previous = +new Date();
+        fn.apply(context, args);
+      }, wait);
+    }
+  };
+}
