@@ -1,3 +1,4 @@
+// https://github.com/hujiulong/blog/issues/4
 function render(vNode, container) {
   container = container || document.createElement("div");
 

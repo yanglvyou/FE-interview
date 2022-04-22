@@ -25,7 +25,7 @@ function compose(middleware) {
     return dispatch(0);
     function dispatch(i) {
       const fn = middleware[i];
-      if (!fn) return;
+      if (!fn) return  Promise.resolve();
       return fn(ctx, dispatch.bind(null, i + 1));
     }
   };
