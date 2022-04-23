@@ -19,10 +19,11 @@ asyncPool(2, [1000, 5000, 3000, 2000], timeout);
 // 5000 finishes
 // 2000 finishes
 // Resolves, results are passed in given array order `[1000, 5000, 3000, 2000]`.
+
 function asyncPool(poolLimit, array, iteratorFn) {
   let i = 0;
-  const ret = [];// 存储所有的异步任务
-  const executing = [];// 存储正在执行的异步任务
+  const ret = []; // 存储所有的异步任务
+  const executing = []; // 存储正在执行的异步任务
   const enqueue = function () {
     if (i === array.length) {
       return Promise.resolve();
@@ -33,15 +34,16 @@ function asyncPool(poolLimit, array, iteratorFn) {
     ret.push(p);
 
     let r = Promise.resolve();
-
+    // 当poolLimit值小于或等于总任务个数时，进行并发控制
     if (poolLimit <= array.length) {
+      // 当任务完成后，从正在执行的任务数组中移除已完成的任务
       const e = p.then(() => executing.splice(executing.indexOf(e), 1));
       executing.push(e);
       if (executing.length >= poolLimit) {
         r = Promise.race(executing);
       }
     }
-
+    // 正在执行任务列表 中较快的任务执行完成之后，才会从array数组中获取新的待办任务
     return r.then(() => enqueue());
   };
   return enqueue().then(() => Promise.all(ret));
@@ -71,9 +73,9 @@ async function asyncPool(poolLimit, array, iteratorFn) {
   return Promise.all(ret);
 }
 
+
 // const timeout = i => new Promise(resolve => setTimeout(() => resolve(i), i));
 // const results = await asyncPool(2, [1000, 5000, 3000, 2000], timeout);
-
 
 // ES9
 async function* asyncPool(concurrency, iterable, iteratorFn) {

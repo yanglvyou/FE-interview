@@ -112,6 +112,20 @@ function simpleCo(gen) {
 }
 
 
+simpleCo(function* () {
+  const res1 = yield Promise.resolve(100);
+  const res2 = yield Promise.resolve(res1 + 200);
+  return res2;
+}).then(
+  function (val) {
+    console.log(val, 33333);
+  },
+  function (err) {
+    console.error(err, 4444);
+  }
+);
+
+
 // 自动执行器
 function run(gen){
   var g = gen();
