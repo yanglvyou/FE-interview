@@ -89,7 +89,7 @@ function throttle(func, wait) {
   return throttled;
 }
 
-<<<<<<< HEAD
+
 function throttle3(fn, wait) {
   let context,
     timeout = null,
