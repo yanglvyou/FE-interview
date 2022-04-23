@@ -1,3 +1,4 @@
+// https://zhuanlan.zhihu.com/p/499386347
 function shallowEqual(objA, objB) {
   if (Object.is(objA, objB)) {
     return true;

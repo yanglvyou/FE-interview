@@ -4,11 +4,9 @@ const timeout = (i) =>
   new Promise((resolve) => setTimeout(() => resolve(i), i));
 
 asyncPool(2, [1000, 5000, 3000, 2000], timeout);
-
 // asyncPool(2, [1000, 5000, 3000, 2000], timeout).then(results => {
 //   ...
 // });
-
 // Call iterator (i = 1000)
 // Call iterator (i = 5000)
 // Pool limit of 2 reached, wait for the quicker one to complete...
@@ -30,7 +28,7 @@ function asyncPool(poolLimit, array, iteratorFn) {
     if (i === array.length) {
       return Promise.resolve();
     }
-    const item = array[i++]; // 获取新的任务项
+    const item = array[i++];// 获取新的任务项
     // 调用iteratorFn函数创建异步任务
     const p = Promise.resolve().then(() => iteratorFn(item, array));
     ret.push(p);
@@ -51,6 +49,11 @@ function asyncPool(poolLimit, array, iteratorFn) {
   return enqueue().then(() => Promise.all(ret));
 }
 
+// const timeout = i => new Promise(resolve => setTimeout(() => resolve(i), i));
+// return asyncPool(2, [1000, 5000, 3000, 2000], timeout).then(results => {
+//   ...
+// });
+
 // ES7
 async function asyncPool(poolLimit, array, iteratorFn) {
   const ret = [];
@@ -69,6 +72,11 @@ async function asyncPool(poolLimit, array, iteratorFn) {
   }
   return Promise.all(ret);
 }
+
+
+// const timeout = i => new Promise(resolve => setTimeout(() => resolve(i), i));
+// const results = await asyncPool(2, [1000, 5000, 3000, 2000], timeout);
+
 // ES9
 async function* asyncPool(concurrency, iterable, iteratorFn) {
   const executing = new Set();
