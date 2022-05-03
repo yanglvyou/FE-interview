@@ -1,3 +1,5 @@
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled
+// https://es6.ruanyifeng.com/#docs/promise#Promise-allSettled
 if (!Promise.allSettled) {
   Promise.allSettled = function (promises) {
     return new Promise((resolve) => {

@@ -1,5 +1,8 @@
 // https://juejin.cn/post/6945319439772434469
 // https://juejin.cn/post/6844903796129136654
+// https://mp.weixin.qq.com/s/_gDIO6YCswAS2dICllMG0A
+
+// https://mp.weixin.qq.com/s/_gDIO6YCswAS2dICllMG0A
 const PENDING = "pending";
 const FULFILLED = "fulfilled";
 const REJECTED = "rejected";
@@ -93,7 +96,7 @@ class MyPromise {
   }
 
   // resolve 静态方法
-  
+
   static resolve(param) {
     if (param instanceof MyPromise) return param;
     return new MyPromise((resolve, reject) => {
