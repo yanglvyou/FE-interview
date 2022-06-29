@@ -4,7 +4,7 @@
 //https://github.com/mqyqingfeng/Blog/issues/12
 
 Function.prototype.myBind = function (context, ...args1) {
-  if (this === Function.prototype) {
+  if (typeof this !== "function") {
     throw new TypeError("Error");
   }
   const _this = this;

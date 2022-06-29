@@ -53,9 +53,7 @@ let foo = function () {
         done,
       };
     },
-    next(){
-      
-    }
+    next() {},
   };
 };
 
@@ -72,29 +70,86 @@ console.log(gen.next(222));
 console.log(gen.next());
 console.log(gen.next());
 
-
-
-function* numbers () {
-  yield 1
-  yield 2
-  return 3
-  yield 4
+function* numbers() {
+  yield 1;
+  yield 2;
+  return 3;
+  yield 4;
 }
 
 // 扩展运算符
-[...numbers()] // [1, 2]
+[...numbers()]; // [1, 2]
 
 // Array.from 方法
-Array.from(numbers()) // [1, 2]
+Array.from(numbers()); // [1, 2]
 
 // 解构赋值
 let [x, y] = numbers();
-x // 1
-y // 2
+x; // 1
+y; // 2
 
 // for...of 循环
 for (let n of numbers()) {
-  console.log(n)
+  console.log(n);
 }
 // 1
 // 2
+
+class Context {
+  constructor(params) {
+    this.prev = 0;
+    this.next = 0;
+    this.done = false;
+    this._sent = null;
+  }
+  stop() {
+    this.done = true;
+  }
+}
+
+function gen$(context) {
+  let a;
+  while (1) {
+    switch ((context.prev = context.next)) {
+      case 0:
+        context.next = 2;
+        return "result1";
+      case 2:
+        a = context._sent;
+        // console.log(a);
+        context.next = 4;
+        return "result2" + a;
+      case 4:
+        context.next = 6;
+        return "result3";
+      case 6:
+        return context.stop();
+      default:
+        return context.stop();
+    }
+  }
+}
+
+function generator() {
+  const ctx = new Context();
+  return {
+    next: function (param) {
+      if (param) {
+        ctx._sent = param;
+      }
+      const value = gen$(ctx);
+      const done = ctx.done;
+      return {
+        value,
+        done,
+      };
+    },
+  };
+}
+
+const gen = generator();
+
+console.log(gen.next());
+console.log(gen.next("参数"));
+console.log(gen.next());
+console.log(gen.next());

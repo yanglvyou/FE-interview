@@ -1,14 +1,13 @@
 //new 运算符创建一个用户定义的对象类型的实例或具有构造函数的内置对象的实例
 // https://github.com/mqyqingfeng/Blog/issues/13
 
-// https://github.com/BetaSu/fe-hunter/issues/15#issuecomment-1078625200
 function myNew(fn, ...arg) {
   if (typeof fn !== "function") {
     throw new Error();
   }
   const obj = Object.create(fn.prototype);
   const res = fn.apply(obj, arg);
-  return typeof res === "object" ? res || obj : obj;
+  // return typeof res === "object" ? res || obj : obj;
   return Object.prototype.toString.call(res) === "[object Object]" ? res : obj;
 }
 
@@ -27,7 +26,7 @@ function myNew(fn, ...arg) {
 执行构造函数，将其 this 指向实例对象，同时传入参数
 获得构造函数返回值，判断是不是对象，如果是对象，则作为 new 的返回值，否则将实例对象作为 new 的返回值
  */
-
+// https://github.com/BetaSu/fe-hunter/issues/15#issuecomment-1078625200
 function myNew(Fn, ...args) {
   // 检测异常
   if (typeof Fn != "function") {
@@ -45,3 +44,21 @@ function myNew(Fn, ...args) {
   // 决定 new 的返回值
   return returnValue instanceof Object ? returnValue : instance;
 }
+
+// 构造函数原型不为空的情况
+function Student(name, age) {
+  this.name = name;
+  this.age = age;
+}
+const student1 = myNew(Student, "Jack", 20);
+const student2 = new Student("Jack", 20);
+console.log(student1); // {name:'Jack',age:20}
+console.log(student2); // {name:'Jack',age:20}
+
+// 构造函数原型为空的情况
+function Fn() {}
+Fn.prototype = null;
+const fn1 = myNew(Fn);
+const fn2 = new Fn();
+Object.getPrototypeOf(fn1) === Object.prototype; // true
+Object.getPrototypeOf(fn2) === Object.prototype; // true

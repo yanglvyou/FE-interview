@@ -38,7 +38,7 @@ function search(object, value) {
     if (Object.prototype.hasOwnProperty.call(object, key)) {
       if (object[key] === value) return [key];
       if (typeof object[key] === "object") {
-        var temp = search(object[key], value);
+        const temp = search(object[key], value);
         if (temp) return [key, temp].flat();
       }
     }

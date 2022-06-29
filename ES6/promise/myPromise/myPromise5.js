@@ -3,6 +3,7 @@
 // https://mp.weixin.qq.com/s/_gDIO6YCswAS2dICllMG0A
 
 // https://mp.weixin.qq.com/s/_gDIO6YCswAS2dICllMG0A
+
 const PENDING = "pending";
 const FULFILLED = "fulfilled";
 const REJECTED = "rejected";
@@ -183,6 +184,7 @@ function resolvePromise(promise, x, resolve, reject) {
           (y) => {
             if (called) return;
             called = true;
+            // 防止出现 resolve 保存 promise 的情况
             resolvePromise(promise, y, resolve, reject);
           },
           (r) => {
@@ -193,6 +195,7 @@ function resolvePromise(promise, x, resolve, reject) {
         );
       } catch (error) {
         if (called) return;
+        called = true;
         reject(error);
       }
     } else {

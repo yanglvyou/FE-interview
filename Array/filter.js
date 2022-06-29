@@ -1,3 +1,4 @@
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
 Array.prototype.filter = function (callbackfn, thisArg) {
   // 处理数组类型异常
   if (this === null || this === undefined) {
@@ -5,7 +6,7 @@ Array.prototype.filter = function (callbackfn, thisArg) {
   }
   // 处理回调类型异常
   if (Object.prototype.toString.call(callbackfn) != "[object Function]") {
-    throw new TypeError(callbackfn + ' is not a function')
+    throw new TypeError(callbackfn + " is not a function");
   }
   let O = Object(this);
   let len = O.length >>> 0;
@@ -20,4 +21,4 @@ Array.prototype.filter = function (callbackfn, thisArg) {
     }
   }
   return res;
-}
+};

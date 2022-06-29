@@ -36,7 +36,6 @@ function findCardLocation(arr) {
     }
     result.unshift(arr[i]);
   }
-
   return result;
 }
 

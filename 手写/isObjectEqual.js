@@ -13,7 +13,6 @@ function isObjectEqual(a = {}, b = {}) {
     if (typeof aVal === "object" && typeof bVal === "object") {
       return isObjectEqual(aVal, bVal);
     }
-
     // return String(aVal) === String(bVal);
     return Object.is(aVal, bVal); 
   });

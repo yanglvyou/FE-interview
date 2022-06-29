@@ -33,7 +33,6 @@ const tree = [
 ];
 
 //1、 不考虑性能实现，递归遍历查找
-
 function getChildren(data, result, pid) {
   for (const item of data) {
     if (item.pid === pid) {
@@ -151,3 +150,31 @@ let JsonTree = [
     ],
   },
 ];
+
+const arr2 = [
+  { id: 1 },
+  { id: 2, pId: 1 },
+  { id: 3, pId: 2 },
+  { id: 4 },
+  { id: 3, pId: 2 },
+  { id: 5, pId: 4 },
+];
+
+const fn = (arr2) => {
+  const res = [];
+
+  const map = arr2.reduce((res, item) => ((res[item.id] = item), res), {});
+
+  for (const item of Object.values(map)) {
+    if (!item.pId) {
+      res.push(item);
+    } else {
+      const parent = map[item.pId];
+      parent.child = parent.child || [];
+      parent.child.push(item);
+    }
+  }
+  return res;
+};
+
+console.log(fn(arr2));

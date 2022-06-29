@@ -1,21 +1,22 @@
-const PENDING = "pending";
 const FULFILLED = "fulfilled";
 const REJECTED = "rejected";
+const PENDING = "pending";
 
 class MyPromise {
   constructor(executor) {
     this.status = PENDING;
     this.value = null;
     this.reason = null;
-    this.onResolvedCallbacks = [];
+    this.onFulfilledCallbacks = [];
     this.onRejectedCallbacks = [];
 
     const resolve = (value) => {
       if (this.status === PENDING) {
         this.status = FULFILLED;
         this.value = value;
-        while (this.onResolvedCallbacks.length > 0) {
-          this.onResolvedCallbacks.shift()();
+
+        while (this.onFulfilledCallbacks.length) {
+          this.onFulfilledCallbacks.shift()()
         }
       }
     };
@@ -24,8 +25,9 @@ class MyPromise {
       if (this.status === PENDING) {
         this.status = REJECTED;
         this.reason = reason;
-        while (this.onRejectedCallbacks.length > 0) {
-          this.onRejectedCallbacks.shift()();
+
+        while (this.onRejectedCallbacks.length) {
+          this.onRejectedCallbacks.shift()()
         }
       }
     };
@@ -33,7 +35,7 @@ class MyPromise {
     try {
       executor(resolve, reject);
     } catch (error) {
-      reject(error);
+      return reject(error);
     }
   }
 
@@ -48,49 +50,39 @@ class MyPromise {
           };
 
     const promise2 = new MyPromise((resolve, reject) => {
-      const onFulfilledCallback = () => {
+      const onFulfilledQueueMicrotask = () => {
         queueMicrotask(() => {
           try {
             const x = onFulfilled(this.value);
             resolvePromise(promise2, x, resolve, reject);
           } catch (error) {
-            return reject(error);
+            reject(error);
           }
         });
       };
 
-      const onRejectedCallback = () => {
+      const onRejectedQueueMicrotask = () => {
         queueMicrotask(() => {
           try {
             const x = onRejected(this.reason);
             resolvePromise(promise2, x, resolve, reject);
           } catch (error) {
-            return reject(error);
+            reject(error);
           }
         });
       };
 
       if (this.status === PENDING) {
-        this.onResolvedCallbacks.push(onFulfilledCallback);
-        this.onRejectedCallbacks.push(onRejectedCallback);
+        this.onFulfilledCallbacks.push(onFulfilledQueueMicrotask);
+        this.onRejectedCallbacks.push(onRejectedQueueMicrotask);
       } else if (this.status === FULFILLED) {
-        onFulfilledCallback();
+        onFulfilledQueueMicrotask();
       } else if (this.status === REJECTED) {
-        onRejectedCallback();
+        onRejectedQueueMicrotask();
       }
     });
 
     return promise2;
-  }
-
-  finally(callback) {
-    return this.then(
-      (value) => MyPromise.resolve(callback()).then(() => value),
-      (err) =>
-        MyPromise.resolve(callback()).then(() => {
-          throw err;
-        })
-    );
   }
 }
 
@@ -101,7 +93,6 @@ function resolvePromise(promise, x, resolve, reject) {
 
   if (x !== null && (typeof x === "object" || typeof x === "function")) {
     let then;
-
     try {
       then = x.then;
     } catch (error) {
@@ -126,6 +117,7 @@ function resolvePromise(promise, x, resolve, reject) {
         );
       } catch (error) {
         if (called) return;
+        called = true;
         reject(error);
       }
     } else {
@@ -137,12 +129,11 @@ function resolvePromise(promise, x, resolve, reject) {
 }
 
 MyPromise.deferred = function () {
-  const result = {};
+  let result = {};
   result.promise = new MyPromise((resolve, reject) => {
     result.resolve = resolve;
     result.reject = reject;
   });
-
   return result;
 };
 

@@ -1,3 +1,4 @@
+// https://juejin.cn/post/6844903986479251464#heading-29
 Array.prototype.splice = function (startIndex, deleteCount, ...addElements) {
   let argumentsLen = arguments.length;
   let array = Object(this);

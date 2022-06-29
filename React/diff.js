@@ -1,5 +1,5 @@
 // https://mp.weixin.qq.com/s/uU2wcs3AX-RRvbu_loQXAQ
-// https://codesandbox.io/s/naughty-matan-6fq7n6?file=/src/diff.ts:0-1110
+// https://codesandbox.io/s/react-diff-tg37v0?file=/src/diff.ts
 
 type NodeList = Node[];
 type Flag = "Placement" | "Deletion";

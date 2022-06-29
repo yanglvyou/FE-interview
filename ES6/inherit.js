@@ -1,6 +1,9 @@
 // https://juejin.cn/post/6844903872847151112
 
+// https://github.com/mqyqingfeng/Blog/issues/16
+
 // 第一种方式是借助call实现继承
+
 // 这样写的时候子类虽然能够拿到父类的属性值，但是问题是父类原型对象中一旦存在方法那么子类无法继承
 
 function Parent1() {
@@ -13,7 +16,6 @@ function Child1() {
 console.log(new Child1());
 
 // 第二种方式借助原型链实现继承
-//
 function Parent2() {
   this.name = "parent2";
   this.play = [1, 2, 3];
@@ -46,9 +48,6 @@ var s4 = new Child3();
 s3.play.push(4);
 console.log(s3.play, s4.play);
 
-
-
-
 function Parent4() {
   this.name = "parent4";
   this.play = [1, 2, 3];
@@ -60,7 +59,7 @@ function Child4() {
 Child4.prototype = Parent4.prototype;
 
 
-
+// 寄生组合式继承
 function Parent5() {
   this.name = "parent5";
   this.play = [1, 2, 3];

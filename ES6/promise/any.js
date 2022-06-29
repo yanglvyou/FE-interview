@@ -40,7 +40,7 @@ Promise.any = function (promises) {
           length--;
           errs.push(err);
           if (length === 0) {
-            reject(new AggregateError(errs));
+            reject(new AggregateError(errs, "All promises were rejected"));
           }
         }
       );

@@ -55,16 +55,21 @@ function Child(name, age) {
 function _inherits(Child, Parent) {
   // Object.create
   Child.prototype = Object.create(Parent.prototype);
+
   // Object.setPrototypeOf(Child.prototype, Parent.prototype);
+
   // __proto__
+
   // Child.prototype.__proto__ = Parent.prototype;
   Child.prototype.constructor = Child;
   // ES6
-  // Object.setPrototypeOf(Child, Parent);
+
+
   // __proto__
 
   // 子类构造函数的__proto__指向父类构造器，继承父类的静态方法
   Child.__proto__ = Parent;
+
   // Object.setPrototypeOf(Child,Parent)
 }
 
