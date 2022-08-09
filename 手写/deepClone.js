@@ -276,6 +276,10 @@ const target = {
 
 
 
+
+
+
+
 // 判断是否是引用类型
 function isObject(target) {
   return (
@@ -290,7 +294,7 @@ function getType(target) {
 }
 
 // 可以继续遍历的数据类型
-const canTraverseType = ["Array", "Object", "Map", "Set", "Arguments"];
+const canConvertType = ["Array", "Object", "Map", "Set", "Arguments"];
 
 // 初始化target
 function initCloneTarget(target) {
@@ -342,7 +346,7 @@ function deepClone(target, map = new WeakMap()) {
   // 获取 target 具体的数据类型
   const type = getType(target);
   let cloneTarget;
-  if (canTraverseType.includes(type)) {
+  if (canConvertType.includes(type)) {
     cloneTarget = initCloneTarget(target);
   } else {
     return directCloneTarget(target, type);

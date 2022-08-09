@@ -1,4 +1,10 @@
 //https://github.com/mqyqingfeng/Blog/issues/11
+/**
+ * 使用一个指定的 this 值和若干个指定的参数值的前提下调用某个函数或方法。
+ * @param {*} context 
+ * @param {*} args 
+ * @returns 
+ */
 Function.prototype.myApply = function (context = window, args) {
   if (!Array.isArray(args)) {
     throw new TypeError("CreateListFromArrayLike called on non-object");

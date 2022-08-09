@@ -3,6 +3,28 @@
 
 // https://segmentfault.com/a/1190000014196851
 
+// 用户构造器
+function User(name, age, career, work) {
+  this.name = name;
+  this.age = age;
+  this.career = career;
+  this.work = work;
+}
+
+// 映射职责
+const mapToWork = {
+  coder: ["写代码", "修Bug"],
+  boss: ["看报纸", "喝茶"],
+};
+
+function factory({ name, age, career }) {
+  return new User(name, age, career, mapToWork[career]);
+}
+
+const userInstance = factory({ name: "杨旅游", age: 22, career: "coder" });
+
+console.log(userInstance, "userInstance");
+
 //  简单工厂模式
 let UserFactory = function (role) {
   function User(opt) {
@@ -43,8 +65,6 @@ let normalUser = UserFactory("user");
 // 但是在函数内包含了所有对象的创建逻辑（构造函数）和判断逻辑的代码，每增加新的构造函数还需要修改判断逻辑代码。
 //当我们的对象不是上面的3个而是30个或更多时，这个函数会成为一个庞大的超级函数，便得难以维护。
 //所以，简单工厂只能作用于创建的对象数量较少，对象的创建逻辑不复杂时使用。
-
-
 
 /* 工厂类 */
 class Factory {

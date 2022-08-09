@@ -1,3 +1,4 @@
+// https://segmentfault.com/a/1190000040563214
 /**
  *
  * 字符串 trim 方法模拟

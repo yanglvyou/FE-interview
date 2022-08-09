@@ -1,4 +1,40 @@
 // https://juejin.cn/post/6883706752487915534
+
+const sleep = (time) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
+
+class Lazy {
+  constructor(name) {
+    this.enqueue = [() => console.log(name)];
+    setTimeout(this.run.bind(this), 0);
+  }
+
+  async run() {
+    while (this.enqueue.length) {
+      await this.enqueue.shift()();
+    }
+  }
+  eat(name) {
+    this.enqueue.push(() => console.log(name));
+    return this;
+  }
+
+  sleep(time) {
+    this.enqueue.push(() => sleep(time));
+    return this;
+  }
+  sleepFirst(time) {
+    this.enqueue.unshift(() => sleep(time));
+    return this;
+  }
+}
+
+const LazyMan = (name) => new Lazy(name);
+
+LazyMan("LazyMan1").sleepFirst(9000).eat("food").sleep(3000).eat("dinner");
+
 class _LazyMan1 {
   constructor(name) {
     this.enqueue = [];
@@ -105,21 +141,21 @@ class _LazyMan2 {
 // https://github.com/BetaSu/fe-hunter/issues/13#issuecomment-1077839583
 function LazyMan(name) {
   const { log } = console;
-  const sleep = s =>
-    new Promise(res =>
+  const sleep = (s) =>
+    new Promise((res) =>
       setTimeout(() => log(`Wake up after ${s}`) || res(), s * 1000)
     );
   // 定义队列并切设置第一个任务
   const queue = [() => log(`Hi! This is ${name}!`)];
-  
-  // 这个里用了 push(x) && ctx 
+
+  // 这个里用了 push(x) && ctx
   // push 的返回值是数组 push 后的长度 所以不会出现 0 , 可以放心在箭头函数里使用
   const ctx = {
-    eat: food => queue.push(() => log(`Eat ${food}~`)) && ctx,
-    sleep: s => queue.push(() => sleep(s)) && ctx,
-    sleepFirst: s => queue.unshift(() => sleep(s)) && ctx
+    eat: (food) => queue.push(() => log(`Eat ${food}~`)) && ctx,
+    sleep: (s) => queue.push(() => sleep(s)) && ctx,
+    sleepFirst: (s) => queue.unshift(() => sleep(s)) && ctx,
   };
-  
+
   // 延迟在下一个周期执行, 为了收集执行的任务
   queueMicrotask(async () => {
     while (queue.length) {
@@ -128,7 +164,6 @@ function LazyMan(name) {
   });
   return ctx;
 }
-
 
 const LazyMan = (name) => new _LazyMan(name);
 

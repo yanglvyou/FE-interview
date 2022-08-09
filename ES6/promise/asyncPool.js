@@ -28,7 +28,7 @@ function asyncPool(poolLimit, array, iteratorFn) {
     if (i === array.length) {
       return Promise.resolve();
     }
-    const item = array[i++];// 获取新的任务项
+    const item = array[i++]; // 获取新的任务项
     // 调用iteratorFn函数创建异步任务
     const p = Promise.resolve().then(() => iteratorFn(item, array));
     ret.push(p);
@@ -48,6 +48,8 @@ function asyncPool(poolLimit, array, iteratorFn) {
   };
   return enqueue().then(() => Promise.all(ret));
 }
+
+
 
 // const timeout = i => new Promise(resolve => setTimeout(() => resolve(i), i));
 // return asyncPool(2, [1000, 5000, 3000, 2000], timeout).then(results => {
@@ -73,7 +75,6 @@ async function asyncPool(poolLimit, array, iteratorFn) {
   return Promise.all(ret);
 }
 
-
 // const timeout = i => new Promise(resolve => setTimeout(() => resolve(i), i));
 // const results = await asyncPool(2, [1000, 5000, 3000, 2000], timeout);
 
@@ -93,3 +94,40 @@ async function* asyncPool(concurrency, iterable, iteratorFn) {
     yield await Promise.race(executing);
   }
 }
+
+/**
+ * https://juejin.cn/post/6844904055819468808#heading-5
+ */
+async sendRequest(forms, max=4) {
+  +  return new Promise(resolve => {
+  +    const len = forms.length;
+  +    let idx = 0;
+  +    let counter = 0;
+  +    const start = async ()=> {
+  +      // 有请求，有通道
+  +      while (idx < len && max > 0) {
+  +        max--; // 占用通道
+  +        console.log(idx, "start");
+  +        const form = forms[idx].form;
+  +        const index = forms[idx].index;
+  +        idx++
+  +        request({
+  +          url: '/upload',
+  +          data: form,
+  +          onProgress: this.createProgresshandler(this.chunks[index]),
+  +          requestList: this.requestList
+  +        }).then(() => {
+  +          max++; // 释放通道
+  +          counter++;
+  +          if (counter === len) {
+  +            resolve();
+  +          } else {
+  +            start();
+  +          }
+  +        });
+  +      }
+  +    }
+  +    start();
+  +  });
+  +}
+  

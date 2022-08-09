@@ -41,7 +41,7 @@ function throttle(func, wait) {
 function throttle(func, wait) {
   var timeout;
   return function () {
-    context = this;
+    const context = this;
     args = arguments;
     if (!timeout) {
       timeout = setTimeout(function () {

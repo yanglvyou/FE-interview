@@ -12,7 +12,6 @@ function RAFSetTimeout(callback, time) {
     }
     window.requestAnimationFrame(loop);
   }
-
   window.requestAnimationFrame(loop);
 }
 

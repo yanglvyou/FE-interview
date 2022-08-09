@@ -14,15 +14,15 @@ export default function applyMiddleware(...middlewares) {
     const chain = middlewares.map((middleware) => middleware(middlewareAPI));
 
     // 假设chain如下：
-// chain = [
-//   a: next => action => { console.log('第1层中间件') return next(action) }
-//   b: next => action => { console.log('第2层中间件') return next(action) }
-//   c: next => action => { console.log('根dispatch') return next(action) }
-// ]
-dispatch = a(b(c(dispatch)))
-// 调用dispatch(action)
-// 执行循序
-/*
+    // chain = [
+    //   a: next => action => { console.log('第1层中间件') return next(action) }
+    //   b: next => action => { console.log('第2层中间件') return next(action) }
+    //   c: next => action => { console.log('根dispatch') return next(action) }
+    // ]
+    dispatch = a(b(c(dispatch)));
+    // 调用dispatch(action)
+    // 执行循序
+    /*
    1. 调用 a(b(c(dispatch)))(action) __print__: 第1层中间件
    2. 返回 a: next(action) 即b(c(dispatch))(action)
    3. 调用 b(c(dispatch))(action) __print__: 第2层中间件

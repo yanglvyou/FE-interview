@@ -1,3 +1,11 @@
+/**
+ * https://tech.meituan.com/2017/07/14/redux-design-code.html
+ * http://cn.redux.js.org/understanding/thinking-in-redux/three-principles#%E4%BD%BF%E7%94%A8%E7%BA%AF%E5%87%BD%E6%95%B0%E6%9D%A5%E6%89%A7%E8%A1%8C%E4%BF%AE%E6%94%B9
+ * @param {*} reducers
+ * @param {*} initState
+ * @param {*} enhancer
+ * @returns
+ */
 export default function createStore(reducers, initState, enhancer) {
   // 出现多个enhancer
   if (
@@ -25,8 +33,8 @@ export default function createStore(reducers, initState, enhancer) {
 
   let currentReducer = reducers;
   let currentState = initState;
-  let currentListeners = [];// 避免在发布通知调用用户回调函数时抛错影响了数组
-  let isDispatching = false;// 防止在 reducer 中执行，getState、dispatch、subscribe、unsubscribe
+  let currentListeners = []; // 避免在发布通知调用用户回调函数时抛错影响了数组
+  let isDispatching = false; // 防止在 reducer 中执行，getState、dispatch、subscribe、unsubscribe
 
   function subscribe(listener) {
     if (typeof listener !== "function") {
@@ -99,7 +107,7 @@ export default function createStore(reducers, initState, enhancer) {
     }
 
     currentReducer = nextReducer;
-    
+
     dispatch({ type: Symbol() });
 
     return store;
