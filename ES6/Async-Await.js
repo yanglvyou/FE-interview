@@ -131,3 +131,33 @@ console.log(asyncRes) // Promise
 asyncRes.then(res => console.log(res)) // 8
 
 
+console.log("script start");
+
+async function async1() {
+  console.log("async1 start");
+  await async2(); // 返回 Promise 放入事件队列 并让出主线程
+  console.log("async1 end");
+}
+
+async function async2() {
+  Promise.resolve().then(()=>{
+    console.log("async2");
+  })
+}
+
+async1();
+
+setTimeout(() => {
+  console.log("timeout");
+}, 0);
+
+new Promise(function (resolve) {
+  console.log("promise1");
+  resolve();
+}).then(function () {
+  console.log("promise2");
+});
+
+console.log("script end");
+
+
