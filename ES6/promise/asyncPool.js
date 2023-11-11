@@ -49,8 +49,6 @@ function asyncPool(poolLimit, array, iteratorFn) {
   return enqueue().then(() => Promise.all(ret));
 }
 
-
-
 // const timeout = i => new Promise(resolve => setTimeout(() => resolve(i), i));
 // return asyncPool(2, [1000, 5000, 3000, 2000], timeout).then(results => {
 //   ...
@@ -98,36 +96,80 @@ async function* asyncPool(concurrency, iterable, iteratorFn) {
 /**
  * https://juejin.cn/post/6844904055819468808#heading-5
  */
-async sendRequest(forms, max=4) {
-  +  return new Promise(resolve => {
-  +    const len = forms.length;
-  +    let idx = 0;
-  +    let counter = 0;
-  +    const start = async ()=> {
-  +      // 有请求，有通道
-  +      while (idx < len && max > 0) {
-  +        max--; // 占用通道
-  +        console.log(idx, "start");
-  +        const form = forms[idx].form;
-  +        const index = forms[idx].index;
-  +        idx++
-  +        request({
-  +          url: '/upload',
-  +          data: form,
-  +          onProgress: this.createProgresshandler(this.chunks[index]),
-  +          requestList: this.requestList
-  +        }).then(() => {
-  +          max++; // 释放通道
-  +          counter++;
-  +          if (counter === len) {
-  +            resolve();
-  +          } else {
-  +            start();
-  +          }
-  +        });
-  +      }
-  +    }
-  +    start();
-  +  });
-  +}
-  
+// async sendRequest(forms, max=4) {
+//     return new Promise(resolve => {
+//       const len = forms.length;
+//       let idx = 0;
+//       let counter = 0;
+//       const start = async ()=> {
+//         // 有请求，有通道
+//         while (idx < len && max > 0) {
+//          max--; // 占用通道
+//          console.log(idx, "start");
+//          const form = forms[idx].form;
+//          const index = forms[idx].index;
+//          idx++
+//          request({
+//            url: '/upload',
+//            data: form,
+//            onProgress: this.createProgresshandler(this.chunks[index]),
+//            requestList: this.requestList
+//          }).then(() => {
+//            max++; // 释放通道
+//            counter++;
+//            if (counter === len) {
+//              resolve();
+//            } else {
+//              start();
+//            }
+//          });
+//        }
+//      }
+//      start();
+//    });
+
+class Scheduler {
+  constructor(max) {
+    this.max = max;
+    this.count = 0;
+    this.queue = [];
+  }
+  add(p) {
+    this.queue.push(p);
+    this.start();
+  }
+  start() {
+    if (this.count >= this.max || !this.queue.length) return;
+    this.count++;
+    this.queue
+      .shift()()
+      .finally(() => {
+        this.count--;
+        this.start();
+      });
+  }
+}
+
+// 延迟函数
+const sleep = (time) => new Promise((resolve) => setTimeout(resolve, time));
+
+// 同时进行的任务最多2个
+const scheduler = new Scheduler(2);
+
+// 添加异步任务
+// time: 任务执行的时间
+// val: 参数
+const addTask = (time, val) => {
+  scheduler.add(() => {
+    return sleep(time).then(() => console.log(val));
+  });
+};
+
+addTask(1000, "1");
+addTask(500, "2");
+addTask(300, "3");
+addTask(400, "4");
+// 2
+// 3
+// 1
+// 4

@@ -17,7 +17,7 @@ Function.prototype.myBind = function (context, ...args1) {
   };
 };
 
-//也就是说当 bind 返回的函数作为构造函数的时候，bind 时指定的 this 值会失效，但传入的参数依然生效。
+// 也就是说当 bind 返回的函数作为构造函数的时候，bind 时指定的 this 值会失效，但传入的参数依然生效。
 var value = 2;
 
 var foo = {
