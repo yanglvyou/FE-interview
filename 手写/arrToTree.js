@@ -49,6 +49,24 @@ const arrToTree = (arr, pid) => {
   return result;
 };
 
+// chatGPT
+
+function buildTree(arr, parentId = 0) {
+  const result = [];
+
+  arr.forEach((node) => {
+    if (node.pid === parentId) {
+      const children = buildTree(arr, node.id);
+      if (children.length) {
+        node.children = children;
+      }
+      result.push(node);
+    }
+  });
+
+  return result;
+}
+
 // 2、不用递归，也能搞定
 function arrayToTree(arr) {
   const result = [];
@@ -77,6 +95,27 @@ function arrayToTree(arr) {
   }
 
   return result;
+}
+
+// chatGPT
+function buildTree(arr) {
+  const map = {};
+  const roots = [];
+
+  arr.forEach((node) => {
+    map[node.id] = { ...node, children: [] };
+  });
+
+  arr.forEach((node) => {
+    const parent = map[node.pid];
+    if (parent) {
+      parent.children.push(map[node.id]);
+    } else {
+      roots.push(map[node.id]);
+    }
+  });
+
+  return roots;
 }
 
 // 3、最优性能

@@ -1,6 +1,9 @@
 // instanceof 运算符用于检测构造函数的 prototype 属性是否出现在某个实例对象的原型链上。
 // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/instanceof
 function new_instance_of(leftValue, rightValue) {
+  //基本数据类型直接返回false
+  if (typeof leftValue !== "object" || leftValue === null) return false;
+
   let rightProto = rightValue.prototype; // 取右表达式的 prototype 值
   // leftValue = leftValue.__proto__; // 取左表达式的__proto__值
   leftValue = Object.getPrototypeOf(leftValue); // 取左表达式的__proto__值
@@ -34,8 +37,8 @@ function isPrototype(Aobj, Bobj) {
   return false;
 }
 
-class Parent { }
-class Child extends Parent { }
-class Grandson extends Child { }
+class Parent {}
+class Child extends Parent {}
+class Grandson extends Child {}
 
 isPrototype(Parent, Grandson); // true

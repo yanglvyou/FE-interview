@@ -25,10 +25,10 @@ function breathTravelSal(node) {
 
 console.log(breathTravelSal(parentDOM1));
 
-
 // DFS(深度优先遍历)
 
-const parentDOM2 = document.querySelector('#container');
+const parentDOM2 = document.querySelector("#container");
+
 function deepTravelSal(node) {
   const nodes = [];
   const stack = [];
@@ -39,14 +39,13 @@ function deepTravelSal(node) {
       const len = item.children.length;
       nodes.push(item);
       for (let i = len - 1; i >= 0; i--) {
-        stack.push(item.children[i])
+        stack.push(item.children[i]);
       }
     }
   }
   return nodes;
 }
 console.log(deepTravelSal(parentDOM2));
-
 
 const root = {
   key: "A1",
@@ -56,33 +55,31 @@ const root = {
       children: [
         {
           key: "C1",
-          children: []
+          children: [],
         },
         {
           key: "C2",
-          children: []
-        }
-      ]
+          children: [],
+        },
+      ],
     },
     {
       key: "B2",
       children: [
         {
           key: "C3",
-          children: []
+          children: [],
         },
         {
           key: "C4",
-          children: []
-        }
-      ]
-    }
-  ]
+          children: [],
+        },
+      ],
+    },
+  ],
 };
 const walk = (dom) => {
   console.log(dom.key);
   dom.children.forEach((child) => walk(child));
 };
 walk(root);
-
-

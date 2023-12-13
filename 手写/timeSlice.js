@@ -83,4 +83,4 @@ const workloop = (deadline) => {
   }
 };
 
-requestIdleCallback(workloop, { timeout: 1000 });
+window.requestIdleCallback(workloop, { timeout: 1000 });

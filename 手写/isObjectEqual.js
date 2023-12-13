@@ -14,6 +14,6 @@ function isObjectEqual(a = {}, b = {}) {
       return isObjectEqual(aVal, bVal);
     }
     // return String(aVal) === String(bVal);
-    return Object.is(aVal, bVal); 
+    return Object.is(aVal, bVal);
   });
 }

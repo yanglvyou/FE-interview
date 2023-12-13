@@ -10,7 +10,7 @@ const timeout = (time) => new Promise(resolve => {
   setTimeout(resolve, time)
 })
 
-const scheduler = new Scheduler()
+const scheduler = new Scheduler(2)
 const addTask = (time, order) => {
   scheduler.add(() => timeout(time)).then(() => console.log(`任务${order}完成`))
 }

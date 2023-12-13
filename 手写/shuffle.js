@@ -17,17 +17,16 @@ let shuffle1 = (arr) => {
 
 console.log(shuffle1(arr));
 
-
 /**
  * 随机返回-0.5到0.5的值，数组顺序进行随机交换，就实现了洗牌，
  * 也可以理解为数组排序规则不固定，穿插从大到小或者从小到大，从而实现随机。
  */
 
-const shuffle3 = arr => arr.sort(() => 0.5 - Math.random())
+const shuffle3 = (arr) => arr.sort(() => 0.5 - Math.random());
 
+shuffle3([2, 3, 6, 2, 6, 2]); // [6, 2, 2, 2, 3, 6]
 
-
-shuffle3([2,3,6,2,6,2]) // [6, 2, 2, 2, 3, 6]
+// https://juejin.cn/post/6844903863812620296#heading-4
 
 // 为什么不通过sort来打乱数组
 // 因为v8 在处理 sort 方法时，使用了插入排序和快排两种方案。当目标数组长度小于10时，使用插入排序；反之，使用快排。

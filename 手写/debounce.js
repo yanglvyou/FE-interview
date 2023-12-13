@@ -56,6 +56,7 @@ function debounce(func, wait, immediate) {
     var args = arguments;
 
     if (timeout) clearTimeout(timeout);
+
     if (immediate) {
       // 如果已经执行过，不再执行
       var callNow = !timeout;
@@ -71,8 +72,6 @@ function debounce(func, wait, immediate) {
   };
 }
 
-
-
 // 第五版
 
 // 此时注意一点，就是 getUserAction 函数可能是有返回值的，所以我们也要返回函数的执行结果，但是当 immediate 为 false 的时候，
@@ -81,32 +80,28 @@ function debounce(func, wait, immediate) {
 // 所以我们只在 immediate 为 true 的时候返回函数的执行结果。
 
 function debounce(func, wait, immediate) {
+  var timeout, result;
 
-    var timeout, result;
+  return function () {
+    var context = this;
+    var args = arguments;
 
-    return function () {
-        var context = this;
-        var args = arguments;
-
-        if (timeout) clearTimeout(timeout);
-        if (immediate) {
-            // 如果已经执行过，不再执行
-            var callNow = !timeout;
-            timeout = setTimeout(function(){
-                timeout = null;
-            }, wait)
-            if (callNow) result = func.apply(context, args)
-        }
-        else {
-            timeout = setTimeout(function(){
-                func.apply(context, args)
-            }, wait);
-        }
-        return result;
+    if (timeout) clearTimeout(timeout);
+    if (immediate) {
+      // 如果已经执行过，不再执行
+      var callNow = !timeout;
+      timeout = setTimeout(function () {
+        timeout = null;
+      }, wait);
+      if (callNow) result = func.apply(context, args);
+    } else {
+      timeout = setTimeout(function () {
+        func.apply(context, args);
+      }, wait);
     }
+    return result;
+  };
 }
-
-
 
 // 第六版
 
@@ -116,34 +111,32 @@ function debounce(func, wait, immediate) {
 
 // 为了这个需求，我们写最后一版的代码：
 function debounce(func, wait, immediate) {
+  var timeout, result;
 
-    var timeout, result;
+  var debounced = function () {
+    var context = this;
+    var args = arguments;
 
-    var debounced = function () {
-        var context = this;
-        var args = arguments;
-
-        if (timeout) clearTimeout(timeout);
-        if (immediate) {
-            // 如果已经执行过，不再执行
-            var callNow = !timeout;
-            timeout = setTimeout(function(){
-                timeout = null;
-            }, wait)
-            if (callNow) result = func.apply(context, args)
-        }
-        else {
-            timeout = setTimeout(function(){
-                func.apply(context, args)
-            }, wait);
-        }
-        return result;
-    };
-
-    debounced.cancel = function() {
-        clearTimeout(timeout);
+    if (timeout) clearTimeout(timeout);
+    if (immediate) {
+      // 如果已经执行过，不再执行
+      var callNow = !timeout;
+      timeout = setTimeout(function () {
         timeout = null;
-    };
+      }, wait);
+      if (callNow) result = func.apply(context, args);
+    } else {
+      timeout = setTimeout(function () {
+        func.apply(context, args);
+      }, wait);
+    }
+    return result;
+  };
 
-    return debounced;
+  debounced.cancel = function () {
+    clearTimeout(timeout);
+    timeout = null;
+  };
+
+  return debounced;
 }

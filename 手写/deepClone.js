@@ -274,12 +274,6 @@ const target = {
   },
 };
 
-
-
-
-
-
-
 // 判断是否是引用类型
 function isObject(target) {
   return (
@@ -379,6 +373,10 @@ function deepClone(target, map = new WeakMap()) {
         }
       }
     }
+
+    // Reflect.ownKeys(target).forEach((key) => {
+    //   cloneTarget[key] = deepClone(target[key], map);
+    // });
   }
 
   return cloneTarget;

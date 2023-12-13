@@ -1,6 +1,5 @@
 // https://es6.ruanyifeng.com/#docs/promise#Promise-all
 
-
 Promise.all = function (promises) {
   promises = Array.from(promises); //将可迭代对象转换为数组
   return new Promise((resolve, reject) => {

@@ -8,12 +8,20 @@ function mySetInterval(callback, timeout) {
     }, timeout);
   }
   interval();
-  
+
   interval.cancel = () => {
     clearTimeout(timer);
   };
 
   return interval;
+}
+
+function newSetInterval(fuc, time) {
+  function inside() {
+    fuc();
+    setTimeout(inside, time);
+  }
+  setTimeout(inside, time);
 }
 
 // 使用方法

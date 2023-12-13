@@ -89,47 +89,44 @@ function generatorToAsync(generatorFn) {
 }
 
 function fn(nums) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(nums * 2)
-    }, 1000)
-  })
+      resolve(nums * 2);
+    }, 1000);
+  });
 }
 
 const asyncFn = generatorToAsync(gen);
 
 asyncFn().then((res) => console.log(res));
 
-
 async function asyncFn() {
-  const num1 = await fn(1)
-  console.log(num1) // 2
-  const num2 = await fn(num1)
-  console.log(num2) // 4
-  const num3 = await fn(num2)
-  console.log(num3) // 8
-  return num3
+  const num1 = await fn(1);
+  console.log(num1); // 2
+  const num2 = await fn(num1);
+  console.log(num2); // 4
+  const num3 = await fn(num2);
+  console.log(num3); // 8
+  return num3;
 }
-const asyncRes = asyncFn()
-console.log(asyncRes) // Promise
-asyncRes.then(res => console.log(res)) // 8
-
+const asyncRes = asyncFn();
+console.log(asyncRes); // Promise
+asyncRes.then((res) => console.log(res)); // 8
 
 function* gen() {
-  const num1 = yield fn(1)
-  console.log(num1) // 2
-  const num2 = yield fn(num1)
-  console.log(num2) // 4
-  const num3 = yield fn(num2)
-  console.log(num3) // 8
-  return num3
+  const num1 = yield fn(1);
+  console.log(num1); // 2
+  const num2 = yield fn(num1);
+  console.log(num2); // 4
+  const num3 = yield fn(num2);
+  console.log(num3); // 8
+  return num3;
 }
 
-const genToAsync = generatorToAsync(gen)
-const asyncRes = genToAsync()
-console.log(asyncRes) // Promise
-asyncRes.then(res => console.log(res)) // 8
-
+const genToAsync = generatorToAsync(gen);
+const asyncRes = genToAsync();
+console.log(asyncRes); // Promise
+asyncRes.then((res) => console.log(res)); // 8
 
 console.log("script start");
 
@@ -140,9 +137,10 @@ async function async1() {
 }
 
 async function async2() {
-  Promise.resolve().then(()=>{
-    console.log("async2");
-  })
+  console.log("async2");
+  // Promise.resolve().then(()=>{
+  //   console.log("async2");
+  // })
 }
 
 async1();
@@ -151,13 +149,11 @@ setTimeout(() => {
   console.log("timeout");
 }, 0);
 
-new Promise(function (resolve) {
-  console.log("promise1");
-  resolve();
-}).then(function () {
-  console.log("promise2");
-});
+// new Promise(function (resolve) {
+//   console.log("promise1");
+//   resolve();
+// }).then(function () {
+//   console.log("promise2");
+// });
 
 console.log("script end");
-
-

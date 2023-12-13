@@ -89,6 +89,43 @@ const jsx = {
 // https://github.com/QuarkGluonPlasma/frontend-framework-exercize/blob/main/render-vdom/dong.js
 // https://juejin.cn/post/7055364698136379423
 
+const element2 = {
+  type: "ul",
+  props: {
+    className: "list",
+  },
+  children: [
+    {
+      type: "li",
+      props: {
+        className: "item",
+        style: {
+          background: "blue",
+          color: "#fff",
+        },
+        onClick: function () {
+          alert(1);
+        },
+      },
+      children: ["aaaa"],
+    },
+    {
+      type: "li",
+      props: {
+        className: "item",
+      },
+      children: ["bbbbddd"],
+    },
+    {
+      type: "li",
+      props: {
+        className: "item",
+      },
+      children: ["cccc"],
+    },
+  ],
+};
+
 function isTextVdom(vdom) {
   return typeof vdom == "string" || typeof vdom == "number";
 }
@@ -138,11 +175,10 @@ const setAttribute = (dom, key, value) => {
   }
 };
 
-
 const JSX = {
   type: "ul",
   props: {
-    className: "list"
+    className: "list",
   },
   children: [
     {
@@ -151,13 +187,13 @@ const JSX = {
         className: "item",
         style: {
           background: "blue",
-          color: "#fff"
+          color: "#fff",
         },
         onClick: function () {
           alert(11);
-        }
+        },
       },
-      children: ["aaaa"]
+      children: ["aaaa"],
     },
     {
       type: "li",
@@ -165,18 +201,17 @@ const JSX = {
         className: "item",
         style: {
           background: "red",
-          fontSize: "30px"
-        }
+          fontSize: "30px",
+        },
       },
-      children: ["bbbbddd"]
+      children: ["bbbbddd"],
     },
     {
       type: "li",
       props: {
-        className: "item"
+        className: "item",
       },
-      children: ["cccc"]
-    }
-  ]
+      children: ["cccc"],
+    },
+  ],
 };
-
