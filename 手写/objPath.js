@@ -181,7 +181,6 @@ function getTarget(root, name) {
         }
       }
     }
-    return null;
   };
   return helper(root, name);
 }
